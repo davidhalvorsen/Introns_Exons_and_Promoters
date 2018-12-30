@@ -1,8 +1,8 @@
 # Goals
-* Scientific Writing
+This is what I want to present on Wednesday, January 2nd @7am:
 * Coding
-	* Wrangling_CIRM_Data: get downloadling shell script working for logging failures ... maybe fix space dog
-	* Breaking_Ontogeny: git Clays' bash script working, describe missing filek, add example data to play w/ and mini-tutorial
+	* Wrangling_CIRM_Data: get downloadling shell script working for logging failures
+	* Breaking_Ontogeny: git Clays' bash script working, describe missing files, add example data to play w/ and mini-tutorial
 	* Review Introns, Exons, and Promoters
 * Scientific Writing
 	* ALT
@@ -18,7 +18,54 @@
 		* Review of DNA Sequencing methods from CIRM
 		* Exon sequencing ALT
 		* Sequencing Identifying Gene Signature in ALT
+==========================================================================
+# Reading and Writing FASTA
+* Print_hATRX_Gene_Fasta.py
+* Print_hATRX_Protein_Fasta.py
+* Create_New_ATRX_FASTA_Files.py
 
+# Simplified Transcription and Translation
+
+
+# Introns
+a segment of a DNA or RNA molecule that does not code for proteins and interrupts the sequence of genes.
+
+
+# Exons
+a segment of a DNA or RNA molecule containing information coding for a protein or peptide sequence.
+
+
+# Promoters
+n genetics, a promoter is a region of DNA that initiates transcription of a particular gene. Promoters are located near the transcription start sites of genes, on the same strand and upstream on the DNA (towards the 3' region of the anti-sense strand).
+
+
+# Open Reading Frames
+In molecular genetics, an open reading frame (ORF) is the part of a reading frame that has the ability to be translated. An ORF is a continuous stretch of codons that begins with a start codon (usually AUG) and ends at a stop codon (usually UAA, UAG or UGA).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+========================
 # Transcription and Translation Review (Python & R)
 I recently mixed up Exons with Introns :S ... here's a review of Exons, Introns, Promoters, and Open Reading Frames with examples done in R Studio & Python:
 
