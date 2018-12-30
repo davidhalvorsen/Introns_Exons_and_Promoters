@@ -1,3 +1,24 @@
+# Goals
+* Scientific Writing
+* Coding
+	* Wrangling_CIRM_Data: get downloadling shell script working for logging failures ... maybe fix space dog
+	* Breaking_Ontogeny: git Clays' bash script working, describe missing filek, add example data to play w/ and mini-tutorial
+	* Review Introns, Exons, and Promoters
+* Scientific Writing
+	* ALT
+		* Is TMM inhibition a universal cancer treatment?
+		* Markers of ALT Activity
+		* Promoter Compaction and Exon Deletion can Initiate ALT
+		* ALT remodels telomere architecture
+	* Stem Cells
+		* MSC promoter and ATRX => ALT
+		* HSC dysfunction may lead to AD (microglia)
+		* iPSC seem to use ALT
+	* Sequencing	
+		* Review of DNA Sequencing methods from CIRM
+		* Exon sequencing ALT
+		* Sequencing Identifying Gene Signature in ALT
+
 # Transcription and Translation Review (Python & R)
 I recently mixed up Exons with Introns :S ... here's a review of Exons, Introns, Promoters, and Open Reading Frames with examples done in R Studio & Python:
 
