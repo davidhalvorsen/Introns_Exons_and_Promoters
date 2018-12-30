@@ -24,8 +24,9 @@ This is what I want to present on Wednesday, January 2nd @7am:
 * Print_hATRX_Protein_Fasta.py
 * Create_New_ATRX_FASTA_Files.py
 
-# Simplified Transcription and Translation
-
+# Simplified (Incorrect) DNA => Protein
+* Print_Standard_Codon_Table.py
+* 
 
 # Introns
 a segment of a DNA or RNA molecule that does not code for proteins and interrupts the sequence of genes.
