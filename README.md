@@ -2,6 +2,14 @@ Repo: ALT_Introns_Exons_and_Promoters
 Description: I used Python and R to explore the Alternative Lengthening of Telomeres literature in Homo sapiens, Caenorhabditis elegans, and yeast.
 Website: davehalvorsen.github.oi/ALT
 
+# Telomere Maintenance Mechanisms
+Alternative Lengthening of Telomeres (ALT)
+Telomerase (TEL)
+Shay FIGURE DUAL INHIBITION
+REDDEL EST
+these therapies complicated cause might need to shorten telomere lengths too !
+ALT+ cells using ALT
+TEL+ cells using TEL
 
 # ATRX Exon Deletion is Common in ALT
 This project can be found in the Human_ATRX_ALT folder. ATRX gene mutations are found in a range of cancers. 10-15% of cancers are estimated to use ALT. ALT involves homologous recombination-based telomere elongation. Inactivating mutations in either ATRX or DAXX are found in many cancers. Depletion of ATRX seems insufficient to trigger ALT, but it does seem to play a key role in the ALT pathway. The absence of ATRX might lead to the failure of stalled replication forks to get resolved. The required fork restart would require homologus recombination and could jumpstart the ALT pathway (Clynes 2013). ALT involves a template-based lengthening of telomeres with homologous recombination. The genetic and epigenetic changes are not full understood. Lovejoy 2012 reported that ATRX gene mutations are a common feature of ALT. Specifically 19/22 ALT+ cell lines had an issue with the expression of ATRX or DAXX (Lovejoy 2012). See the Lovejoy 2012 supplementary information for the Excel table of Exon deletions in ALT cell lines. 
@@ -51,33 +59,23 @@ showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
 You can see that the sequences are the same until postion 236. That is where the Exon deletion for U2OS starts! 
 ![ATRX_Exon_Deletion_Alignment](/Assets/ATRX_Exon_Deletion_Alignment.jpg "ATRX_Exon_Deletion_Alignment")
 
-# TERT Promoter Compaction Causes ALT in Human and Mouse Cells
-* Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
-	* mESC deficient for DNMT have HUGE telomeres. Mouse subtelomeres HEAVILY methylated, BT NOT in DNMT cells?!?	
-	* Histone 3 Lys9 H3K9 and histone 4 Lys 20 H4K20 trimethylation REMAIN.
-	* lack of DNMT INCREASED telomeric recombination (T-SCE) and APBs. authors conclude that increased telomeric recombination MIGHT lead to telomere length changes, BUT they do not exclude the invovlement of telomerase in the aberrant telomere elongation, BUT here are two papers that better describe the link!!!!
+# TERT Promoter Compaction is Found in ALT
+ALT cells commonly have long, heterogenous telomere lengths (Kumakura 2005). Mouse embryonic stem cells deficient for DNMT have HUGE telomeres. Under normal conditions, mouse subtelomeres are heavily methylated, BUT that is not the case in mESC deficient for DNMT. The lack of DNMT increased the rate of telomeric sister chromatid exchanges (T-SCE), and ALT-associated Promyelocytic Nuclear Bodies (APBs). T-SCE and APBs are both common features of ALT activity. The authors concluded that the increased telomeric recombination MIGHT lead to telomere length changes, BUT they do not exclude the involvement of telomerase in the weirdly long telomeres that were seen (Gonzalo 2006). Luckily, I found these two other papers that go into more detail about TERT chromatin compaction in ALT!
 
-* Atkinson 2005 found chromatin modifications of hTR and hTERT promoters linked w/ ALT
-	* hTR and hTERT lower expression in ALT is linked w/ histone H3 and H4 hypoacetylation amd methylation of Lys9 of Histone H3
-	* TEL+ cells had hyperacetylation of H3 and H4 and methylation of Lys4H3. 
-	* Treatment w/ 5 AZC and Trichostatin A => chromatin remodeling hTR, hTERT and therefore expression. 
-	* ALT+ methylated Lys20 Histone H4 not associated w/ gene expression, but does seem ALT-specific ... new marker?
-	* authors propose ALT may arise from tight repression of hTR and hTERT promoters ... possibly why MSC go ALT?!?
+Atkinson 2005 found that chromatin modifications of hTR and hTERT promoters were commonly found in ALT activity. Treatment of ALT+ cells with 5-AZC or Trichostatin A lead to chromatin remodeling of hTR and hTERT. This induced telomerase expression. Interestingly enough they found that mehtylated Lys20 Histon H4 was not associated with gene expression, BUT does seem to be ALT specific (Atkinson 2005). This might be a new marker of ALT activity! Acetylation of H3K9 and methylation of H3K4 is known to be associated with an open chromatin conformation. In Kumakura 2005, the authors found that ALT+ cells had H3K9 methylation and low levels of H3K4 methylation and H3K9+H3K14 acetylations. The ratio of H3K9 methylation / H3K4 methylation was different across ALT+ and TEL+ cell lines. They found that treating ALT+ cells with TSC or 5-AZC caused a reversion from complete to partial methylation of the CpG islands on the hTERT promoter. They switched an E6CL TEL+ line to TEL- and it was able to grow for well over 240 population doublings (Kumakura 2005). That's some ALT activity right there!
+![H3K9_H3K4_Methylation_Ratio](/Assets/H3K9_H3K4_Methylation_Ratio "H3K9_H3K4_Methylation_Ratio")
+(Kumakura 2005)
 
-* Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
-	* Triochostatin A and/or 5 AZC reversion from complete to partial methylation of CpG islands of hTERT promoters.
-	* ALT+ cells had long, heterogenous telomere lengths
-	* acetylation H3K9 and methylation of H3K4 OPEN chromatin KNOWN
-	* parent WHE NO TMM had H3K9 hypo methylation, H3K4 hypermethylation and acetylations of H3K9 and H3K14
-	* ALT H3K9 methylation and low levels of H3K4 methylation and H3K9+H3K14 acetylations
-	* treating with TSC or 5AZC decreased ratio of H3K9 methylation / H3K4 methylation of ALT into TEL- lines
-	* authors made E6CL from TEL+ to TEL- w/ >240 PDs!!!
-	* evidence that TMM reverseible based on chromatin structure!!!
-	* FIGURE OF RATIOS!
 
-Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
-Atkinson 2005 Lack of Telomerase Gene Expression in Alternative Lengthening of Telomere Cells Is Associated with Chromatin Remodeling of the hTR and hTERT Gene Promoters
-Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+
+
+
+
+
+
+
+
+
 #### Getting The hTERT Sequence
 The UniProt entry O14746 is for hTERT https://www.uniprot.org/uniprot/O14746. Following GeneID 7015 gets TERT telomerase reverse transcriptase for humans https://www.ncbi.nlm.nih.gov/gene/7015. Note that the reverse arrow on TERT indicates that the sequence is on the reverse strand (this will become important later). I downloaded the FASTA as "NC_000005.10_hChrom5_TERT_CpG_Start.fasta". A quick text search shows that the start codon is at position 59. Take care with this sequence cause it's the reverse complement of the actual sequence!
 
@@ -205,7 +203,9 @@ Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alt
 Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
 Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
 Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA
-
+Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
+Atkinson 2005 Lack of Telomerase Gene Expression in Alternative Lengthening of Telomere Cells Is Associated with Chromatin Remodeling of the hTR and hTERT Gene Promoters
+Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
 
 
 
@@ -217,6 +217,28 @@ NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NO
 	* ATRX mutations found in vareity of cancer types. 10-15% cancers use ALT. HR w/ telomeres OR ectr. inactivating mutations in ATRX OR DAXX found in many ALT cancers. loss of ATRX found in 90% of ALT cell lines. Depletion of ALT seems insufficient to cause ALT ... + telomerase inhibition? 
 	* absence of ATRX might lead to stalled replication forks are not processed well. fork restart is depedent on HR and could trigger the ALT pathway FIGURE OF ALT PATHWAY FROM CLYNES 2013
 
+
+
+* Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
+	* mESC deficient for DNMT have HUGE telomeres. Mouse subtelomeres HEAVILY methylated, BT NOT in DNMT cells?!?	
+	* Histone 3 Lys9 H3K9 and histone 4 Lys 20 H4K20 trimethylation REMAIN.
+	* lack of DNMT INCREASED telomeric recombination (T-SCE) and APBs. authors conclude that increased telomeric recombination MIGHT lead to telomere length changes, BUT they do not exclude the invovlement of telomerase in the aberrant telomere elongation, BUT here are two papers that better describe the link!!!!
+* Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+	* Triochostatin A and/or 5 AZC reversion from complete to partial methylation of CpG islands of hTERT promoters.
+		* ALT+ cells had long, heterogenous telomere lengths
+		* acetylation H3K9 and methylation of H3K4 OPEN chromatin KNOWN
+		* parent WHE NO TMM had H3K9 hypo methylation, H3K4 hypermethylation and acetylations of H3K9 and H3K14
+		* ALT H3K9 methylation and low levels of H3K4 methylation and H3K9+H3K14 acetylations
+		* treating with TSC or 5AZC decreased ratio of H3K9 methylation / H3K4 methylation of ALT into TEL- lines
+		* authors made E6CL from TEL+ to TEL- w/ >240 PDs!!!
+		* evidence that TMM reverseible based on chromatin structure!!!
+		* FIGURE OF RATIOS!
+* Atkinson 2005 found chromatin modifications of hTR and hTERT promoters linked w/ ALT
+	* hTR and hTERT lower expression in ALT is linked w/ histone H3 and H4 hypoacetylation amd methylation of Lys9 of Histone H3
+	* TEL+ cells had hyperacetylation of H3 and H4 and methylation of Lys4H3. 
+	* Treatment w/ 5 AZC and Trichostatin A => chromatin remodeling hTR, hTERT and therefore expression. 
+	* ALT+ methylated Lys20 Histone H4 not associated w/ gene expression, but does seem ALT-specific ... new marker?
+	* authors propose ALT may arise from tight repression of hTR and hTERT promoters ... possibly why MSC go ALT?!?
 
 
 
