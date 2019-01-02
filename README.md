@@ -23,7 +23,7 @@ Searching Ensembl for human ATRX yielded ATRX-201 and ATRX-202. I picked ATRX-20
 #### Removing ATRX Exons 2-29 
 See the Lovejoy 2012 supplementary Excel table for a list of commonly missing ATRX Exons. I decided to play with the U2OS variant because that is a cell line that I used to grow :) U2OS is missing ATRX exons 2-29. NCBI says exon 2 is [236:348] and exon 29 is 6542..6719 https://www.ncbi.nlm.nih.gov/nuccore/NM_000489. I used R to remove those exons.
 
-```{r}
+```r
 library(seqinr)
 WT_hATRX_Gene <- read.fasta("NM_000489.5_homo_sapiens_ATRX_Gene.fasta")
 WT_hATRX_Gene_Nucleotides <- WT_hATRX_Gene[[1]]
@@ -84,7 +84,7 @@ https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1
 #### Analyzing the Alleged CpG Promoter Region
 Dessain 2000 reported that the hTERT CpG island has a GC content of 74% and a CG:GC ratio of 0.87. Is that what I get for the same region?!? I wrote code in R to get the GC content and CG:GC ratio of the hTERT CpG promoter region that I identified. I didn't comment my code ... I am sorry. Note that I picked i=1164 cause Kumakura 2005 says that the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon, which is 654 + 510 = 1164 :) Here's R code that I didn't bother commenting :( 
 
-```{r}
+```r
 dna_file <- read.fasta("/media/david/Linux/Introns_Exons_and_Promoters/hTERT_CpG_Island/NC_000005.10_hChrom5_TERT_CpG_Start.fasta")
 individual_characters <- dna_file[[1]]
 i <- 1
@@ -126,7 +126,7 @@ The lazily unlabeled output is:
 
 Cool-ness! My GC content is 76 % and the ratio of CpG/GpC is 0.84. Recall that Dessain 2000 reported that the hTERT CpG island has a GC content of 74% and a CG:GC ratio of 0.87. I'm 2 % off of the GC content and 0.03 off of the CpG/GpC. THAT'S PRETTY GOOD FOR REPLICATING DATA FROM A PAPER THAT IS ALMOST TWO DECADES OLD :D But, what if that was just random luck? I re-ran that same R code on the region AFTER the CpG island and I got wildly different data. Here's that code (yes, I should've used a function; I am lazy, lol):
 
-```{r}
+```r
 dna_file <- read.fasta("/media/david/Linux/Introns_Exons_and_Promoters/hTERT_CpG_Island/NC_000005.10_hChrom5_TERT_CpG_Start.fasta")
 individual_characters <- dna_file[[1]]
 #individual_characters[5]
@@ -191,7 +191,7 @@ ALT can happen in Caenorhabditis elegans! Mammalian POT1 has homologs in C. eleg
 #### Multiple Sequence Alignment of pot-1 Genes
 YES, pot-2 was the central point of the paper, but it won't be as fun to play with because it only has one isoform. I picked pot-1 cause there is a lot of cool stuff to play with. There were a lot of workup steps to get all of the sequences ... It would take a long while to review them. Essentially, I looked up the proteins on UniProt and then grabbed the DNA files from NCBI GenBank and WormBase. Check out the Celegans_POT1_ALT folder for the file names of everything. The file containing all the C. elegans genes is Celegans_POT1_genes.fasta. I used the R package "msa" for multiple sequence alignment with this code:
 
-```{r}
+```r
 library(msa)
 Celegans_POT1_genes <- "/media/david/Linux/Introns_Exons_and_Promoters/Celegans_POT1_ALT/DNA/Celegans_POT1_genes.fasta"
 Celegans_POT1_genes_DNA <- readDNAStringSet(Celegans_POT1_genes)
@@ -207,7 +207,7 @@ The aligned sequences aren't very pretty ... I decided not to include sequence l
 #### Multiple Sequence Alignment of pot-1 Proteins
 I grabbed all the C elegans pot-1 isoform sequences from UniProt. You can check them out in Celegans_POT1_ALT/Protein. The file containing all of the sequences is Celegans_POT1_Proteins.fasta. I aligned all of the proteins with code that is similar to the DNA alignment code:
 
-```{r}
+```r
 Celegans_POT1_proteins <- "/media/david/Linux/Introns_Exons_and_Promoters/Celegans_POT1_ALT/Protein/Celegans_POT1_Proteins.fasta"
 Celegans_POT1_proteins_AA <- readAAStringSet(Celegans_POT1_proteins)
 Celegans_POT1_protein_alignment <- msa(Celegans_POT1_proteins_AA)
@@ -269,32 +269,48 @@ Transcript B0280.10c.1 is 1140 nucleotides long and it codes for a 379 amino aci
 
 
 # STN1 Mutation Triggers ALT in Yeast
-BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
-UniProtKB - Q9H668 (STN1_HUMAN)
-PART OF CST COMPLEX AND ALT-INVOLVED!!!!!!
-https://www.uniprot.org/uniprot/Q9H668
+ALT is a recombination-based telomere maintenace mechanism used by some human cancers to maintain cellular immortality. ALT cells typically have widly long, heterogenous telomeres. The exact molecular mechanism involved in this pathway are unknown. Iyer 2005 found that a STN1 gene mutation can initiate ALT in the yeast Kluyveromyces lactis. These ALT-like yeast cells experience a rapid telomere shortening when WT STN1 is re-introduced (Iyer 2005). There aren't any neat figures in this paper to talk about, so I'm going to try to replicate the protein multiple sequence alignment from Iyer 2005 figure 4. STN1 is aligned from K. lactis S. cerevisiae (Sc) and Candida glabrata (Cgl).
 
-FIG4 of paper shows sequence analysis of K. lactis STN1 gene and homologues from S. cerevisiae (Sc) and Candida glabrata (Cgl) (GenBank accession numbers P_38960 and XP_448655, respectively).
-BUT NCBI says "The following term was not found in Nucleotide: P_38960."for P_38960. XP_448655 is here: https://www.ncbi.nlm.nih.gov/protein/XP_448655. 
-I couldn't find the sequence for K. lactis they were talking about ... I think it's NCBI Reference Sequence: XM_452728.1 Kluyveromyces lactis uncharacterized protein (KLLA0_C11825g), partial mRNA BECAUSE /note="weakly similar to uniprot|P38960 Saccharomyces
-                     cerevisiae YDR082W STN1 Protein involved in telomere
-                     length regulation functions in telomere metabolism during
-                     late S phase"
+![Yeast_Protein_Alignment](/Assets/Yeast_Protein_Alignment.jpg "Yeast_Protein_Alignment")
+
+#### Obtaining STN1 From 3 Yeast Organisms
+The paper states that the S. cerevisiae (Sc) and Candida glabrata (Cgl) GenBank accession numbers are P_38960 and XP_448655. HOWEVER, it wasn't that easy to find the sequences cause those accession numbers are from back in 2005. NCBI says "The following term was not found in Nucleotide: P_38960." The XP_448655 is here: https://www.ncbi.nlm.nih.gov/protein/XP_448655. I had trouble finding the sequence for K. lactis they were talking about. Here's the crazy search term that I used on NCBI:
+
 and it's the only result (other than whole chromosome chunks) w/ this crazy search term I made:
 (((stn1) NOT "Pyrenophora tritici-repentis"[porgn:__txid45151] NOT "Fusarium fujikuroi"[porgn:__txid5127] NOT "[Candida] glabrata"[porgn:__txid5478] NOT "Hortaea werneckii"[porgn:__txid91943] NOT "Saccharomyces cerevisiae"[porgn:__txid4932]) NOT "Metarhizium robertsii"[porgn:__txid568076] NOT "Fusarium sp. FIESC_5 CS3069"[porgn:__txid1318460] NOT "Fusarium pseudograminearum CS3487"[porgn:__txid1318458] NOT "Fusarium pseudograminearum CS3427"[porgn:__txid1318457] NOT "Fusarium pseudograminearum CS3220"[porgn:__txid1318456] NOT "Fonsecaea multimorphosa"[porgn:__txid979981] NOT "Cladophialophora immunda"[porgn:__txid569365] NOT "Aspergillus nidulans FGSC A4"[porgn:__txid227321] NOT "Candida viswanathii"[porgn:__txid5486] NOT "Zygosaccharomyces bailii"[porgn:__txid4954] NOT "Metarhizium anisopliae"[porgn:__txid5530] NOT "Aspergillus flavus"[porgn:__txid5059] NOT "Talaromyces atroroseus"[porgn:__txid1441469] NOT "[Candida] auris"[porgn:__txid498019] NOT "Zygosaccharomyces rouxii"[porgn:__txid4956] NOT "[Candida] boidinii"[porgn:__txid5477] NOT "Komagataella phaffii"[porgn:__txid460519] NOT "Aspergillus fumigatus"[porgn:__txid746128] NOT "Candida albicans SC5314"[porgn:__txid237561] NOT "Yarrowia lipolytica"[porgn:__txid4952]) AND "Kluyveromyces lactis"[porgn:__txid28985] 
 
-sceriviasa yeast was easier to find cause it's got stn1p in the title
-https://www.ncbi.nlm.nih.gov/nuccore/NM_001180390.1
+... I'm pretty sure that it's NCBI Reference Sequence: XM_452728.1, titled "Kluyveromyces lactis uncharacterized protein (KLLA0_C11825g), partial mRNA" BECAUSE that entry has this note "cerevisiae YDR082W STN1 Protein involved in telomere length regulation functions in telomere metabolism during late S phase." S. ceriviasa yeast was easier to find cause it's got stn1p in the title :) https://www.ncbi.nlm.nih.gov/nuccore/NM_001180390.1
+                     
+#### Attempt to Replicate Lyer 2005 Figure 4
+I used the R msa library to align the three yeast organism STN1 proteins that were obtained above. 
+
+```r
+setwd("/media/david/Linux/Introns_Exons_and_Promoters/Yeast_STN1_ALT/Proteins")
+
+library(msa)
+All_Yeast_STN1_Protein <- "All_Yeast_STN1_Protein.fasta"
+All_Yeast_STN1_Protein <- readDNAStringSet(All_Yeast_STN1_Protein)
+All_Yeast_STN1_Protein_alignment <- msa(All_Yeast_STN1_Protein)
+All_Yeast_STN1_Protein_alignment
+msaPrettyPrint(All_Yeast_STN1_Protein_alignment, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
+```
+
+![Aligning_Yeast_STN1_Proteins](/Assets/Aligning_Yeast_STN1_Proteins.jpg "Aligning_Yeast_STN1_Proteins")
 
 
-Lyer 2005 A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
-https://mcb.asm.org/content/25/18/8064
+#### Aligning Human, Yeast, and Frog STN1
 
-#### getting k lactis
+```r
+Klactis_Xenopus_Human_STN1_Proteins <- "Klactis_Xenopus_Human_STN1_Proteins.fasta"
+Klactis_Xenopus_Human_STN1_Proteins_AA <- readAAStringSet(Klactis_Xenopus_Human_STN1_Proteins)
+Klactis_Xenopus_Human_STN1_Proteins_AA_alignment <- msa(Klactis_Xenopus_Human_STN1_Proteins_AA)
+Klactis_Xenopus_Human_STN1_Proteins_AA_alignment
+msaPrettyPrint(Klactis_Xenopus_Human_STN1_Proteins_AA_alignment, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
+```
+![Klactis_Xenopus_Human_STN1_Proteins_AA_alignment](/Assets/Klactis_Xenopus_Human_STN1_Proteins_AA_alignment.jpg "Klactis_Xenopus_Human_STN1_Proteins_AA_alignment")
 
-#### replicating attempt of lyer 2005
-
-#### multiple sequence3 alignment of human STN1 protein vs. k lactis
 
 
 
@@ -312,6 +328,29 @@ https://mcb.asm.org/content/25/18/8064
 * Dessain 2000 Methylation of the Human Telomerase Gene CpG Island
 * Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alternative lengthening of telomeres with normal telomere lengths
 * Boeck 2016 The time resolved transcriptome of C. elegans
+* Iyer 2005 A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
+
+
+	BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
+	UniProtKB - Q9H668 (STN1_HUMAN)
+	PART OF CST COMPLEX AND ALT-INVOLVED!!!!!!
+	https://www.uniprot.org/uniprot/Q9H668
+
+		FIG4 of paper shows sequence analysis of K. lactis STN1 gene and homologues from S. cerevisiae (Sc) and Candida glabrata (Cgl) (GenBank accession numbers P_38960 and XP_448655, respectively).
+	BUT NCBI says "The following term was not found in Nucleotide: P_38960."for P_38960. XP_448655 is here: https://www.ncbi.nlm.nih.gov/protein/XP_448655. 
+	I couldn't find the sequence for K. lactis they were talking about ... I think it's NCBI Reference Sequence: XM_452728.1 Kluyveromyces lactis uncharacterized protein (KLLA0_C11825g), partial mRNA BECAUSE /note="weakly similar to uniprot|P38960 Saccharomyces
+		             cerevisiae YDR082W STN1 Protein involved in telomere
+		             length regulation functions in telomere metabolism during
+		             late S phase"
+	and it's the only result (other than whole chromosome chunks) w/ this crazy search term I made:
+	(((stn1) NOT "Pyrenophora tritici-repentis"[porgn:__txid45151] NOT "Fusarium fujikuroi"[porgn:__txid5127] NOT "[Candida] glabrata"[porgn:__txid5478] NOT "Hortaea werneckii"[porgn:__txid91943] NOT "Saccharomyces cerevisiae"[porgn:__txid4932]) NOT "Metarhizium robertsii"[porgn:__txid568076] NOT "Fusarium sp. FIESC_5 CS3069"[porgn:__txid1318460] NOT "Fusarium pseudograminearum CS3487"[porgn:__txid1318458] NOT "Fusarium pseudograminearum CS3427"[porgn:__txid1318457] NOT "Fusarium pseudograminearum CS3220"[porgn:__txid1318456] NOT "Fonsecaea multimorphosa"[porgn:__txid979981] NOT "Cladophialophora immunda"[porgn:__txid569365] NOT "Aspergillus nidulans FGSC A4"[porgn:__txid227321] NOT "Candida viswanathii"[porgn:__txid5486] NOT "Zygosaccharomyces bailii"[porgn:__txid4954] NOT "Metarhizium anisopliae"[porgn:__txid5530] NOT "Aspergillus flavus"[porgn:__txid5059] NOT "Talaromyces atroroseus"[porgn:__txid1441469] NOT "[Candida] auris"[porgn:__txid498019] NOT "Zygosaccharomyces rouxii"[porgn:__txid4956] NOT "[Candida] boidinii"[porgn:__txid5477] NOT "Komagataella phaffii"[porgn:__txid460519] NOT "Aspergillus fumigatus"[porgn:__txid746128] NOT "Candida albicans SC5314"[porgn:__txid237561] NOT "Yarrowia lipolytica"[porgn:__txid4952]) AND "Kluyveromyces lactis"[porgn:__txid28985] 
+
+sceriviasa yeast was easier to find cause it's got stn1p in the title
+https://www.ncbi.nlm.nih.gov/nuccore/NM_001180390.1
+
+
+Lyer 2005 A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
+https://mcb.asm.org/content/25/18/8064
 
 
 

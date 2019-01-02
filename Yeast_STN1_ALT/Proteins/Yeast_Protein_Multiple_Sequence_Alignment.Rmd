@@ -13,27 +13,27 @@ output: html_document
 
 
 ```{r}
-setwd("/media/david/Linux/Introns_Exons_and_Promoters/Yeast_STN1_ALT")
+setwd("/media/david/Linux/Introns_Exons_and_Promoters/Yeast_STN1_ALT/Proteins")
 
 library(msa)
-Celegans_POT1_genes <- "Yeast_STN1_Genes.fasta"
-Celegans_POT1_genes_DNA <- readDNAStringSet(Celegans_POT1_genes)
-Celegans_POT1_gene_alignment <- msa(Celegans_POT1_genes_DNA)
-Celegans_POT1_gene_alignment
+All_Yeast_STN1_Protein <- "All_Yeast_STN1_Protein.fasta"
+All_Yeast_STN1_Protein <- readDNAStringSet(All_Yeast_STN1_Protein)
+All_Yeast_STN1_Protein_alignment <- msa(All_Yeast_STN1_Protein)
+All_Yeast_STN1_Protein_alignment
 ```
 
 ```{r}
-print(Celegans_POT1_gene_alignment, show="complete")
+print(All_Yeast_STN1_Protein_alignment, show="complete")
 ```
 
 ```{r}
-msaPrettyPrint(Celegans_POT1_gene_alignment, output="pdf", showNames="none",
+msaPrettyPrint(All_Yeast_STN1_Protein_alignment, output="pdf", showNames="none",
 showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
 ```
 
 
 ```{r}
-Celegans_POT1_proteins <- "/media/david/Linux/Introns_Exons_and_Promoters/Celegans_POT1_ALT/Protein/Celegans_POT1_Proteins.fasta"
+Celegans_POT1_proteins <- "Klactis_and_Human_STN1_Proteins.fasta"
 Celegans_POT1_proteins_AA <- readAAStringSet(Celegans_POT1_proteins)
 Celegans_POT1_protein_alignment <- msa(Celegans_POT1_proteins_AA)
 Celegans_POT1_protein_alignment
