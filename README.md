@@ -2,6 +2,55 @@ Repo: ALT_Introns_Exons_and_Promoters
 Description: I used Python and R to explore the Alternative Lengthening of Telomeres literature in Homo sapiens, Caenorhabditis elegans, and yeast.
 Website: davehalvorsen.github.oi/ALT
 
+
+# ATRX Exon Deletion is Common in ALT
+This project can be found in the Human_ATRX_ALT folder. ATRX gene mutations are found in a range of cancers. 10-15% of cancers are estimated to use ALT. ALT involves homologous recombination-based telomere elongation. Inactivating mutations in either ATRX or DAXX are found in many cancers. Depletion of ATRX seems insufficient to trigger ALT, but it does seem to play a key role in the ALT pathway. The absence of ATRX might lead to the failure of stalled replication forks to get resolved. The required fork restart would require homologus recombination and could jumpstart the ALT pathway (Clynes 2013). ALT involves a template-based lengthening of telomeres with homologous recombination. The genetic and epigenetic changes are not full understood. Lovejoy 2012 reported that ATRX gene mutations are a common feature of ALT. Specifically 19/22 ALT+ cell lines had an issue with the expression of ATRX or DAXX (Lovejoy 2012). See the Lovejoy 2012 supplementary information for the Excel table of Exon deletions in ALT cell lines. 
+![ATRX_Prevents_Fork_Collapse](/Assets/ATRX_Prevents_Fork_Collapse.jpg "ATRX_Prevents_Fork_Collapse")
+(Clynes 2013)
+
+#### Getting ATRX DNA
+Searching Ensembl for human ATRX yielded ATRX-201 and ATRX-202. I picked ATRX-201 cause it has 35 exons (which matches the Lovejoy 2012 paper). It was Ensembly ENST00000373344.10. Ensembl refseq switch to NCBI Reference Sequence yielded NM_000489.5 for the gene. I saved it as NM_000489.5_homo_sapiens_ATRX_Gene.fasta.
+
+#### Removing ATRX Exons 2-29 
+See the Lovejoy 2012 supplementary Excel table for a list of commonly missing ATRX Exons. I decided to play with the U2OS variant because that is a cell line that I used to grow :) U2OS is missing ATRX exons 2-29. NCBI says exon 2 is [236:348] and exon 29 is 6542..6719 https://www.ncbi.nlm.nih.gov/nuccore/NM_000489. I used R to remove those exons.
+
+```{r}
+library(seqinr)
+WT_hATRX_Gene <- read.fasta("NM_000489.5_homo_sapiens_ATRX_Gene.fasta")
+WT_hATRX_Gene_Nucleotides <- WT_hATRX_Gene[[1]]
+length(WT_hATRX_Gene_Nucleotides)
+typeof(WT_hATRX_Gene_Nucleotides)
+WT_hATRX_Gene_Nucleotides
+U2OS_hATRX_Gene_Nucleotide_FIRST <- WT_hATRX_Gene_Nucleotides[1:235]
+U2OS_hATRX_Gene_Nucleotide_SECOND <- WT_hATRX_Gene_Nucleotides[6720:length(WT_hATRX_Gene_Nucleotides)]
+U2OS_ATRX_Characters <- c(U2OS_hATRX_Gene_Nucleotide_FIRST, U2OS_hATRX_Gene_Nucleotide_SECOND)
+U2OS_ATRX_DNAstring <- DNAString(paste(toupper(U2OS_ATRX_Characters), collapse = ""))
+```
+
+#### Sequence Alignment of WT ATRX to Mutant ATRX
+The R msa package can't handle the full length of the ATRX gene, so I shortened it down to 400 nucleotides.
+```{r}
+# limit it to 400 ... that's more than enough to see exon absence
+U2OS_ATRX_DNA_Short <- U2OS_ATRX_DNAstring[1:400]
+WT_hATRX_DNA_Short <- toupper(WT_hATRX_Gene_Nucleotides[1:400])
+write.fasta(sequences = U2OS_ATRX_DNA_Short, names = "U2OS_ATRX_DNA_Short", file.out = "U2OS_ATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
+write.fasta(sequences = WT_hATRX_DNA_Short, names = "WT_hATRX_DNA_Short", file.out = "WT_hATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
+library(msa)
+# both_ATRX_Sequences <- read.fasta("WT_and_U2OS_hATRX.fasta")
+both_ATRX_Sequences_SHORT <- "both_ATRX_Sequences_SHORT.fasta"
+# typeof(both_ATRX_Sequences)
+#both_ATRX_DNAStringSet <- readDNAStringSet(both_ATRX_Sequences)
+#both_ATRX_Sequences_Alignment <- msa(both_ATRX_DNAStringSet)
+both_ATRX_Sequences_SHORT_StringSet <- readDNAStringSet(both_ATRX_Sequences_SHORT)
+both_ATRX_Sequences_Alignment_SHORT <- msa(both_ATRX_Sequences_SHORT_StringSet)
+both_ATRX_Sequences_Alignment_SHORT
+msaPrettyPrint(both_ATRX_Sequences_Alignment_SHORT, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
+#texi2pdf("both_ATRX_Sequences_Alignment.tex", clean=TRUE)
+```
+You can see that the sequences are the same until postion 236. That is where the Exon deletion for U2OS starts! 
+![ATRX_Exon_Deletion_Alignment](/Assets/ATRX_Exon_Deletion_Alignment.jpg "ATRX_Exon_Deletion_Alignment")
+
 # TERT Promoter Compaction Causes ALT in Human and Mouse Cells
 * Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
 	* mESC deficient for DNMT have HUGE telomeres. Mouse subtelomeres HEAVILY methylated, BT NOT in DNMT cells?!?	
@@ -118,62 +167,6 @@ CHENG 2012 CelegansTELOMEREandSURVIVAL.png
 
 
 
-# ATRX Exon Deletion is Common in ALT
-This project can be found in the Human_ATRX_ALT folder. ATRX gene mutations are found in a range of cancers. 10-15% of cancers are estimated to use ALT. ALT involves homologous recombination-based telomere elongation. Inactivating mutations in either ATRX or DAXX are found in many cancers. Depletion of ATRX seems insufficient to trigger ALT, but it does seem to play a key role in the ALT pathway. The absence of ATRX might lead to the failure of stalled replication forks to get resolved. The required fork restart would require homologus recombination and could jumpstart the ALT pathway (Clynes 2013). ALT involves a template-based lengthening of telomeres with homologous recombination. The genetic and epigenetic changes are not full understood. Lovejoy 2012 reported that ATRX gene mutations are a common feature of ALT. Specifically 19/22 ALT+ cell lines had an issue with the expression of ATRX or DAXX (Lovejoy 2012). See the Lovejoy 2012 supplementary information for the Excel table of Exon deletions in ALT cell lines. 
-![ATRX_Prevents_Fork_Collapse](/Assets/ATRX_Prevents_Fork_Collapse.jpg "ATRX_Prevents_Fork_Collapse")
-(Clynes 2013)
-
-
-NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
-* Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
-	* ALT proposedtemplate extension of teloemres w/ HR, BUT getic / epigenetic changes aren't fully known. this paper used genomic, molecular  biological and cell biological sciencyi9ng on panel of 22 ALT cell lines (haz lines derived in vitro). loss of ATRX protein + ATRX gene mutations are feature of ALT lines. ALT linked w/ genome rearrangements, micronucleation and wacky DSB repair ... these diagnositc features may help to identify ALT.
-	* table of exon deletions from supplementary excel
-* Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA(1)
-	* ATRX mutations found in vareity of cancer types. 10-15% cancers use ALT. HR w/ telomeres OR ectr. inactivating mutations in ATRX OR DAXX found in many ALT cancers. loss of ATRX found in 90% of ALT cell lines. Depletion of ALT seems insufficient to cause ALT ... + telomerase inhibition? 
-	* absence of ATRX might lead to stalled replication forks are not processed well. fork restart is depedent on HR and could trigger the ALT pathway FIGURE OF ALT PATHWAY FROM CLYNES 2013
-
-#### Getting ATRX DNA
-Searching Ensembl for human ATRX yielded ATRX-201 and ATRX-202. I picked ATRX-201 cause it has 35 exons (which matches the Lovejoy 2012 paper). It was Ensembly ENST00000373344.10. Ensembl refseq switch to NCBI Reference Sequence yielded NM_000489.5 for the gene. I saved it as NM_000489.5_homo_sapiens_ATRX_Gene.fasta.
-
-#### Removing ATRX Exons 2-29 
-See the Lovejoy 2012 supplementary Excel table for a list of commonly missing ATRX Exons. I decided to play with the U2OS variant because that is a cell line that I used to grow :) U2OS is missing ATRX exons 2-29. NCBI says exon 2 is [236:348] and exon 29 is 6542..6719 https://www.ncbi.nlm.nih.gov/nuccore/NM_000489. I used R to remove those exons.
-
-```{r}
-library(seqinr)
-WT_hATRX_Gene <- read.fasta("NM_000489.5_homo_sapiens_ATRX_Gene.fasta")
-WT_hATRX_Gene_Nucleotides <- WT_hATRX_Gene[[1]]
-length(WT_hATRX_Gene_Nucleotides)
-typeof(WT_hATRX_Gene_Nucleotides)
-WT_hATRX_Gene_Nucleotides
-U2OS_hATRX_Gene_Nucleotide_FIRST <- WT_hATRX_Gene_Nucleotides[1:235]
-U2OS_hATRX_Gene_Nucleotide_SECOND <- WT_hATRX_Gene_Nucleotides[6720:length(WT_hATRX_Gene_Nucleotides)]
-U2OS_ATRX_Characters <- c(U2OS_hATRX_Gene_Nucleotide_FIRST, U2OS_hATRX_Gene_Nucleotide_SECOND)
-U2OS_ATRX_DNAstring <- DNAString(paste(toupper(U2OS_ATRX_Characters), collapse = ""))
-```
-
-#### Sequence Alignment of WT ATRX to Mutant ATRX
-The R msa package can't handle the full length of the ATRX gene, so I shortened it down to 400 nucleotides.
-```{r}
-# limit it to 400 ... that's more than enough to see exon absence
-U2OS_ATRX_DNA_Short <- U2OS_ATRX_DNAstring[1:400]
-WT_hATRX_DNA_Short <- toupper(WT_hATRX_Gene_Nucleotides[1:400])
-write.fasta(sequences = U2OS_ATRX_DNA_Short, names = "U2OS_ATRX_DNA_Short", file.out = "U2OS_ATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
-write.fasta(sequences = WT_hATRX_DNA_Short, names = "WT_hATRX_DNA_Short", file.out = "WT_hATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
-library(msa)
-# both_ATRX_Sequences <- read.fasta("WT_and_U2OS_hATRX.fasta")
-both_ATRX_Sequences_SHORT <- "both_ATRX_Sequences_SHORT.fasta"
-# typeof(both_ATRX_Sequences)
-#both_ATRX_DNAStringSet <- readDNAStringSet(both_ATRX_Sequences)
-#both_ATRX_Sequences_Alignment <- msa(both_ATRX_DNAStringSet)
-both_ATRX_Sequences_SHORT_StringSet <- readDNAStringSet(both_ATRX_Sequences_SHORT)
-both_ATRX_Sequences_Alignment_SHORT <- msa(both_ATRX_Sequences_SHORT_StringSet)
-both_ATRX_Sequences_Alignment_SHORT
-msaPrettyPrint(both_ATRX_Sequences_Alignment_SHORT, output="pdf", showNames="none",
-showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
-#texi2pdf("both_ATRX_Sequences_Alignment.tex", clean=TRUE)
-```
-You can see that the sequences are the same until postion 236. That is where the Exon deletion for U2OS starts! 
-![ATRX_Exon_Deletion_Alignment](/Assets/ATRX_Exon_Deletion_Alignment.jpg "ATRX_Exon_Deletion_Alignment")
 
 # STN1 Mutation Triggers ALT in Yeast
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
@@ -209,9 +202,20 @@ https://mcb.asm.org/content/25/18/8064
 
 # Citations
 Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alternative lengthening of telomeres with normal telomere lengths
-
 Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
+Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
+Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA
 
+
+
+
+NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+* Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
+	* ALT proposedtemplate extension of teloemres w/ HR, BUT getic / epigenetic changes aren't fully known. this paper used genomic, molecular  biological and cell biological sciencyi9ng on panel of 22 ALT cell lines (haz lines derived in vitro). loss of ATRX protein + ATRX gene mutations are feature of ALT lines. ALT linked w/ genome rearrangements, micronucleation and wacky DSB repair ... these diagnositc features may help to identify ALT.
+	* table of exon deletions from supplementary excel
+* Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA(1)
+	* ATRX mutations found in vareity of cancer types. 10-15% cancers use ALT. HR w/ telomeres OR ectr. inactivating mutations in ATRX OR DAXX found in many ALT cancers. loss of ATRX found in 90% of ALT cell lines. Depletion of ALT seems insufficient to cause ALT ... + telomerase inhibition? 
+	* absence of ATRX might lead to stalled replication forks are not processed well. fork restart is depedent on HR and could trigger the ALT pathway FIGURE OF ALT PATHWAY FROM CLYNES 2013
 
 
 
