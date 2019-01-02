@@ -188,24 +188,25 @@ ALT can happen in Caenorhabditis elegans! Mammalian POT1 has homologs in C. eleg
 
 (Cheng 2012)
 
-
-#### Reading and Writing pot-1 FASTA Files
-
 #### Multiple Sequence Alignment of pot-1 Genes
+YES, pot-2 was the central point of the paper, but it won't be as fun to play with because it only has one isoform. I picked pot-1 cause there is a lot of cool stuff to play with. There were a lot of workup steps to get all of the sequences ... It would take a long while to review them. Essentially, I looked up the proteins on UniProt and then grabbed the DNA files from NCBI GenBank and WormBase. Check out the Celegans_POT1_ALT folder for the file names of everything. The file containing all the C. elegans genes is Celegans_POT1_genes.fasta. I used the R package "msa" for multiple sequence alignment with this code:
+
+```{r}
+library(msa)
+Celegans_POT1_genes <- "/media/david/Linux/Introns_Exons_and_Promoters/Celegans_POT1_ALT/DNA/Celegans_POT1_genes.fasta"
+Celegans_POT1_genes_DNA <- readDNAStringSet(Celegans_POT1_genes)
+Celegans_POT1_gene_alignment <- msa(Celegans_POT1_genes_DNA)
+msaPrettyPrint(Celegans_POT1_gene_alignment, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
+```
+
+The aligned sequences aren't very pretty ... I decided not to include sequence labels cause it shortened the available nucleotide space for each new line. Here's part of the output for you to get the idea of the work:
+
+![Celegans_POT1_gene_alignment](/Assets/Celegans_POT1_gene_alignment.jpg "Celegans_POT1_gene_alignment")
 
 #### Multiple Sequence Alignment of pot-1 Proteins
 
-#### Identifying pot-1 Introns
-
-#### Identifying pot-1 Exons
-
 #### Displaying pot-1 Open Reading Frames
-
-##### pot-1 Alternative Splicing
-
-
-
-
 
 # STN1 Mutation Triggers ALT in Yeast
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
