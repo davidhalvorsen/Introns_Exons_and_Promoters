@@ -250,19 +250,6 @@ https://mcb.asm.org/content/25/18/8064
 * Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
 * Dessain 2000 Methylation of the Human Telomerase Gene CpG Island
 * Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alternative lengthening of telomeres with normal telomere lengths
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
-* 
 
 NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
 * Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
