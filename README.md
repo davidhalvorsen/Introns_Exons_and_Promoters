@@ -205,6 +205,21 @@ The aligned sequences aren't very pretty ... I decided not to include sequence l
 ![Celegans_POT1_gene_alignment](/Assets/Celegans_POT1_gene_alignment.jpg "Celegans_POT1_gene_alignment")
 
 #### Multiple Sequence Alignment of pot-1 Proteins
+I grabbed all the C elegans pot-1 isoform sequences from UniProt. You can check them out in Celegans_POT1_ALT/Protein. The file containing all of the sequences is Celegans_POT1_Proteins.fasta. I aligned all of the proteins with code that is similar to the DNA alignment code:
+
+```{r}
+Celegans_POT1_proteins <- "/media/david/Linux/Introns_Exons_and_Promoters/Celegans_POT1_ALT/Protein/Celegans_POT1_Proteins.fasta"
+Celegans_POT1_proteins_AA <- readAAStringSet(Celegans_POT1_proteins)
+Celegans_POT1_protein_alignment <- msa(Celegans_POT1_proteins_AA)
+Celegans_POT1_protein_alignment
+msaPrettyPrint(Celegans_POT1_protein_alignment, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
+```
+
+This alignment looks great! You can see all of the alignments between the different pot-1 isoforms :)
+
+![Celegans_POT1_protein_alignment](/Assets/Celegans_POT1_protein_alignment.jpg "Celegans_POT1_protein_alignment")
+
 
 #### Displaying pot-1 Open Reading Frames
 
