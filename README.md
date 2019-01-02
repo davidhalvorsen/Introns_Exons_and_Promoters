@@ -73,57 +73,109 @@ The UniProt entry O14746 is for hTERT https://www.uniprot.org/uniprot/O14746. Fo
 
 ![hTERT_NCBI_Reverse_Strand](/Assets/hTERT_NCBI_Reverse_Strand.jpg "hTERT_NCBI_Reverse_Strand")
 
-#### Checking for CpG Islands in the Default hTERT Sequence
-
-#### Identifying the hTERT CpG Island Region
-Kumakura 2005 found the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon. 
-
-Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
-Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
-I want to explore hTERT promoter CpG island methylation, BUT I'll need to do some digging to get the sequence and identify the CpG island region. Cong 1999 reports that the core hTERT promoter region is from -330 to +361 bp of the ATG start codon. HOWEVER, that doesn't necessarily imply the CpG region to be ONLY from -330 to +361bp (see next section).
-
-Kumakura 2005
-the hTERT CpG island which is from 654 bp upstream of the putative
-transcription start site to 510 bp downstream of the transcription start site
-were the same as those described by Dessain et al. (8) 
-8 is Dessain SK, Yu H, Reddel RR, Beijersbergen RL,
-Weinberg RA. Methylation of the human telomerase
-gene CpG island. Cancer Res 2000;60:537–41.
-
-Dessain 2000
-On the basis of the quantitative
-criteria proposed by Antequera and Bird (18), this CpG island is from
-654 bp upstream of the putative transcription start site (6) to 510 bp
-downstream of the transcription start site, ending 56 bp after the start
-of the first intron (6 – 8, 18). 5
-Within this region, the DNA has a GC
-content of 74% and a CG:GC ratio of 0.87
-
-
 #### Obtaining hTERT WITH the CpG Island Region
-IMAGE TERT REVERSE ARROW INDICATES REVERSE STRAND
-https://www.ncbi.nlm.nih.gov/gene/7015
-INITIAL SETUP
-from:  
-1253167
- to:  
-1295047
-Cong 1999 start codon of ATG seems to be on line 1 of the hTERT
-"ATGCCGCGCGCT" is end of the line, which is 59 in from the left (59 is A of atg)
-CpG is 654 bp upstream of transcriptoin start site, SO 595 back from current start
-SO 1253167-595 = 1252572 should be start site now
-I might be off by 1 or so, BUT I nkow that its 654 upstream of start to 510 bp downstream of start site (ending 56 bp after start of first intron). I can check the m ath on that location to be sure :)
-I THINK I WAS BACKWARDS?!?
-What about 1295047 + 595 = 1295642 YESSSSSSS, that's right :)
-now i have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable!
-https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true
+Stay with me ... we're about to dig a bit into the literature! The hTERT sequence that I grabbed from NCBI DOES NOT contain the CpG island for hTERT. It doesn't even contain the normal promoter region for hTERT! Cong 1999 reports that the core hTERT promoter region is from -330 to +361 bp of the ATG start codon. HOWEVER, Kumakura 2005 found the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon, so this is the actual region that I need to grab! 
 
+Grabbing the hTERT FASTA sequence from https://www.ncbi.nlm.nih.gov/gene/7015 INITIALLY is from: 1253167 to: 1295047. Checking Cong 1999 and The FASTA file, I can see that the hTERT start codon, AND a bit more of that region, of "ATGCCGCGCGCT" is at the end of the first FASTA line, which is 59 in from the left (59 is A of ATG). CpG is 654 bp upstream of the transcriptoin start site, SO going 595 back from current start site 1253167-595 = 1252572. 1252572 should be the start of the CpG island, RIGHT?!? WRONG!!! ... Why aren't I getting any more nucleotides before the current start read?!?!? OH!!! I'm looking at the reverse complement, lol! ;) 
 
-#### GC content of CpG Promoter R
+It should be  1295047 + 595 = 1295642 YESSSSSSS, that's right :) Now I have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable! This is the new range:
+https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true. I saved the FASTA as NC_000005.10_hChrom5_TERT_CpG_Start.fasta. 
 
+#### Analyzing the Alleged CpG Promoter Region
+Dessain 2000 reported that the hTERT CpG island has a GC content of 74% and a CG:GC ratio of 0.87. Is that what I get for the same region?!? I wrote code in R to get the GC content and CG:GC ratio of the hTERT CpG promoter region that I identified. I didn't comment my code ... I am sorry. Note that I picked i=1164 cause Kumakura 2005 says that the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon, which is 654 + 510 = 1164 :) Here's R code that I didn't bother commenting :( 
 
+```{r}
+dna_file <- read.fasta("/media/david/Linux/Introns_Exons_and_Promoters/hTERT_CpG_Island/NC_000005.10_hChrom5_TERT_CpG_Start.fasta")
+individual_characters <- dna_file[[1]]
+i <- 1
+CG_count <- 0
+GC_count <- 0
+g_count <- 0
+c_count <- 0
+for (letter in individual_characters) {
+  #print(letter)
+  i <- i + 1
+  if (letter == "g") {
+    g_count <- g_count + 1
+  }
+  if (letter == "c") {
+    c_count <- c_count + 1
+  }
+  if ((letter == "c") & (last_letter == "g")) {
+    GC_count <- GC_count + 1
+  }
+  if ((letter == "g") & (last_letter == "c")) {
+    CG_count <- CG_count + 1
+  }
+  last_letter <- letter
+  if (i >= 1164) {
+    break
+  }
+}
+print(100*(c_count+g_count)/1164)
+print(GC_count)
+print(CG_count)
+print(CG_count/GC_count)
+```
+The lazily unlabeled output is:
 
+[1] 76.03093
+[1] 167
+[1] 141
+[1] 0.8443114
 
+Cool-ness! My GC content is 76 % and the ratio of CpG/GpC is 0.84. Recall that Dessain 2000 reported that the hTERT CpG island has a GC content of 74% and a CG:GC ratio of 0.87. I'm 2 % off of the GC content and 0.03 off of the CpG/GpC. THAT'S PRETTY GOOD FOR REPLICATING DATA FROM A PAPER THAT IS ALMOST TWO DECADES OLD :D But, what if that was just random luck? I re-ran that same R code on the region AFTER the CpG island and I got wildly different data. Here's that code (yes, I should've used a function; I am lazy, lol):
+
+```{r}
+dna_file <- read.fasta("/media/david/Linux/Introns_Exons_and_Promoters/hTERT_CpG_Island/NC_000005.10_hChrom5_TERT_CpG_Start.fasta")
+individual_characters <- dna_file[[1]]
+#individual_characters[5]
+i <- 1164
+CG_count <- 0
+GC_count <- 0
+g_count <- 0
+c_count <- 0
+for (letter in individual_characters) {
+  if (i <1164) {
+    next
+  }
+  #print(letter)
+  i <- i + 1
+  if (letter == "g") {
+    g_count <- g_count + 1
+  }
+  if (letter == "c") {
+    c_count <- c_count + 1
+  }
+  if ((letter == "c") & (last_letter == "g")) {
+    GC_count <- GC_count + 1
+  }
+  if ((letter == "g") & (last_letter == "c")) {
+    CG_count <- CG_count + 1
+  }
+  last_letter <- letter
+  
+  
+  if (i >= 42476) {
+    break
+  }
+}
+print(100*(c_count+g_count)/41312)
+print(GC_count)
+print(CG_count)
+print(CG_count/GC_count)
+```
+
+The lazily unlabeled output is:
+
+[1] 58.55926
+[1] 3047
+[1] 1654
+[1] 0.542829
+
+My GC content is 58.5 % and the ratio of CpG/GpC is 0.54. Recall that Dessain 2000 reported that the hTERT CpG island has a GC content of 74% and a CG:GC ratio of 0.87. THE REGION THAT IS NOT A CpG ISLAND IS 15.5% off of the GC content and 0.33 off of the CpG/GpC. I could dig into this with more statistical rigor, but I think you get the idea. I'M EXCITED!!! This was a really cool biological programming exercise!!! :D
+
+ 
 
 
 
@@ -200,7 +252,8 @@ Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA
 Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
 Atkinson 2005 Lack of Telomerase Gene Expression in Alternative Lengthening of Telomere Cells Is Associated with Chromatin Remodeling of the hTR and hTERT Gene Promoters
 Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
-
+Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
+Dessain 2000 Methylation of the Human Telomerase Gene CpG Island
 
 
 NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
@@ -237,6 +290,51 @@ NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NO
 
 
 
+#### 
+Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
+Dessain 2000 Methylation of the Human Telomerase Gene CpG Island
+
+#### Identifying the hTERT CpG Island Region
+	Kumakura 2005 found the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon. 
+
+	Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
+	Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+	I want to explore hTERT promoter CpG island methylation, BUT I'll need to do some digging to get the sequence and identify the CpG island region. Cong 1999 reports that the core hTERT promoter region is from -330 to +361 bp of the ATG start codon. HOWEVER, that doesn't necessarily imply the CpG region to be ONLY from -330 to +361bp (see next section).
+
+	Kumakura 2005
+	the hTERT CpG island which is from 654 bp upstream of the putative
+	transcription start site to 510 bp downstream of the transcription start site
+	were the same as those described by Dessain et al. (8) 
+	8 is Dessain SK, Yu H, Reddel RR, Beijersbergen RL,
+	Weinberg RA. Methylation of the human telomerase
+	gene CpG island. Cancer Res 2000;60:537–41.
+
+	Dessain 2000
+	On the basis of the quantitative
+	criteria proposed by Antequera and Bird (18), this CpG island is from
+	654 bp upstream of the putative transcription start site (6) to 510 bp
+	downstream of the transcription start site, ending 56 bp after the start
+	of the first intron (6 – 8, 18). 5
+	Within this region, the DNA has a GC
+content of 74% and a CG:GC ratio of 0.87
+
+#### Obtaining hTERT WITH the CpG Island Region
+	IMAGE TERT REVERSE ARROW INDICATES REVERSE STRAND
+	https://www.ncbi.nlm.nih.gov/gene/7015
+INITIAL SETUP
+	from:  
+	1253167
+	 to:  
+	1295047
+	Cong 1999 start codon of ATG seems to be on line 1 of the hTERT
+	"ATGCCGCGCGCT" is end of the line, which is 59 in from the left (59 is A of atg)
+	CpG is 654 bp upstream of transcriptoin start site, SO 595 back from current start
+	SO 1253167-595 = 1252572 should be start site now
+	I might be off by 1 or so, BUT I nkow that its 654 upstream of start to 510 bp downstream of start site (ending 56 bp after start of first intron). I can check the m ath on that location to be sure :)
+	I THINK I WAS BACKWARDS?!?
+	What about 1295047 + 595 = 1295642 YESSSSSSS, that's right :)
+now i have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable!
+https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true
 
 
 
