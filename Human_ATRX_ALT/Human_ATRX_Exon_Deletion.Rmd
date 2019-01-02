@@ -79,7 +79,7 @@ showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
 ```{r}
 # limit it to 400 ... that's more than enough to see exon absence
 U2OS_ATRX_DNA_Short <- U2OS_ATRX_DNAstring[1:400]
-WT_hATRX_DNA_Short <- WT_hATRX_Gene_Nucleotides[1:400]
+WT_hATRX_DNA_Short <- toupper(WT_hATRX_Gene_Nucleotides[1:400])
 write.fasta(sequences = U2OS_ATRX_DNA_Short, names = "U2OS_ATRX_DNA_Short", file.out = "U2OS_ATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
 write.fasta(sequences = WT_hATRX_DNA_Short, names = "WT_hATRX_DNA_Short", file.out = "WT_hATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
 ```
@@ -88,11 +88,27 @@ write.fasta(sequences = WT_hATRX_DNA_Short, names = "WT_hATRX_DNA_Short", file.o
 ```{r}
 library(msa)
 # both_ATRX_Sequences <- read.fasta("WT_and_U2OS_hATRX.fasta")
-both_ATRX_Sequences_SHORT <- "WT_and_U2OS_hATRX.fasta"
-typeof(both_ATRX_Sequences)
+both_ATRX_Sequences_SHORT <- "both_ATRX_Sequences_SHORT.fasta"
+# typeof(both_ATRX_Sequences)
 #both_ATRX_DNAStringSet <- readDNAStringSet(both_ATRX_Sequences)
 #both_ATRX_Sequences_Alignment <- msa(both_ATRX_DNAStringSet)
-both_ATRX_Sequences_StringSet <- readDNAStringSet(both_ATRX_Sequences)
-both_ATRX_Sequences_Alignment <- msa(both_ATRX_Sequences_StringSet)
-both_ATRX_Sequences_Alignment
+both_ATRX_Sequences_SHORT_StringSet <- readDNAStringSet(both_ATRX_Sequences_SHORT)
+both_ATRX_Sequences_Alignment_SHORT <- msa(both_ATRX_Sequences_SHORT_StringSet)
+both_ATRX_Sequences_Alignment_SHORT
+```
+
+```{r}
+print(both_ATRX_Sequences_Alignment_SHORT, show="complete")
+
+```
+
+```{r}
+# THIS IS TOO LONG
+#install.packages("pdflatex")
+#library(pdflatex)
+#install.packages("texi2pdf")
+#library(texi2pdf)
+msaPrettyPrint(both_ATRX_Sequences_Alignment_SHORT, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
+#texi2pdf("both_ATRX_Sequences_Alignment.tex", clean=TRUE)
 ```
