@@ -180,20 +180,15 @@ My GC content is 58.5 % and the ratio of CpG/GpC is 0.54. Recall that Dessain 20
 
 
 # POT-1 Deficiency Creates ALT+ C. Elegans Strains
-ALT can happen in C elegans! Most human cancers have long/heterogenous telomeres 
-telomeres cap linear chromosomes cause DNA polymerases can't comleteely copy chromosomes
-telomerase adds telomeric repeats w/ reverse trascription
-shortening leads to senesnce AND is part of stop cancer
-senscence => proliferation invovles teloemre loss and crisis => cell death and crhomsome isntability
-10-15% cancers use ALTspontaneous ALT have long/heterogenous OR normal OR both. 
-POT2 represses normal telomere length ALT. mamallian POT1 has homologs in C elegans
-pot-1 CeOB2 and pot-2 CeOB1 
-pot1 mutants reported to have wild telomere lenghts vs. pot2 normal lengths. 
-authors created a variety of double mutants
-authors found ALT C elegans that had long or normal length
-FIG3D trt-1 & POT-2 absence lead to ALT Caenorhabditis elegans with expected telomere length
-FIG 3D trt-1 & pot-1 mutants reported to have heterogenous telomeres like human ALT
-CHENG 2012 CelegansTELOMEREandSURVIVAL.png
+Telomeres cap linear chromosomes because DNA polymerase can't completely copy chromosomes. Telomerase adds telomeric repeats to the ends of linear chromosomes with reverse transcription. Most human cancers have long, heterogenous telomeres. Telomere shortening leads to senescence and potentially crisis. Cancer emerges as part of massive cell death and genomic rearrangements after crisis. 10-15% of cancers are estimated to use ALT (Cheng 2012). 
+
+ALT can happen in Caenorhabditis elegans! Mammalian POT1 has homologs in C. elegans as pot-1 (CeOB2) and pot-2 (CeOB1). What's the deal with the reversing of 1 and 2? That's how it's reported in the paper ... it's odd. pot-1 mutant C. elegans have HUGE telomere lengths while pot-2 mutants have normal telomere lengths. The authors of Cheng 2012 created a variety of mutants in C. elegans.  The trt-1 C. elegans mutant has a deletion in telomerase reverse transcriptase. trt-1 & pot-2 absence led to ALT+ Caenorhabditis elegans with normal telomere lengths. trt-1 and pot-1 mutants were found to have long, heterogenous telomere lengths like those seen in human ALT. Here is the survival figure showing that C. elegans can survive in the absence of telomerase reverse transcriptase.
+
+![Celegans_ALT_Generation_Survival](/Assets/Celegans_ALT_Generation_Survival.jpg "Celegans_ALT_Generation_Survival")
+
+(Cheng 2012)
+
+
 #### Reading and Writing pot-1 FASTA Files
 
 #### Multiple Sequence Alignment of pot-1 Genes
@@ -254,6 +249,7 @@ Atkinson 2005 Lack of Telomerase Gene Expression in Alternative Lengthening of T
 Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
 Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
 Dessain 2000 Methylation of the Human Telomerase Gene CpG Island
+Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alternative lengthening of telomeres with normal telomere lengths
 
 
 NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
@@ -336,7 +332,21 @@ INITIAL SETUP
 now i have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable!
 https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true
 
-
+Cheng 2012 Caenorhabditis elegans POT-2 telomere protein represses a mode of alternative lengthening of telomeres with normal telomere lengths
+	Most human cancers have long/heterogenous telomeres 
+	telomeres cap linear chromosomes cause DNA polymerases can't comleteely copy chromosomes
+	telomerase adds telomeric repeats w/ reverse trascription
+	shortening leads to senesnce AND is part of stop cancer
+	senscence => proliferation invovles teloemre loss and crisis => cell death and crhomsome isntability
+	10-15% cancers use ALTspontaneous ALT have long/heterogenous OR normal OR both. 
+	POT2 represses normal telomere length ALT. mamallian POT1 has homologs in C elegans
+	pot-1 CeOB2 and pot-2 CeOB1 
+	pot1 mutants reported to have wild telomere lenghts vs. pot2 normal lengths. 
+	authors created a variety of double mutants
+	authors found ALT C elegans that had long or normal length
+	FIG3D trt-1 & POT-2 absence lead to ALT Caenorhabditis elegans with expected telomere length
+	FIG 3D trt-1 & pot-1 mutants reported to have heterogenous telomeres like human ALT
+	CHENG 2012 CelegansTELOMEREandSURVIVAL.png
 
 
 
