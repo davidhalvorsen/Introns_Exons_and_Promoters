@@ -15,7 +15,7 @@ print("")
 print("NM_001361730.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta")
 record = SeqIO.read(file_0, "fasta")
 table = 11
-min_pro_len = 100
+min_pro_len = 150
 
 for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
     for frame in range(3):
@@ -28,7 +28,7 @@ print("")
 print("NM_001361731.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta")
 record = SeqIO.read(file_1, "fasta")
 table = 11
-min_pro_len = 100
+min_pro_len = 150
 
 for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
     for frame in range(3):
@@ -41,7 +41,7 @@ print("")
 print("NM_001361732.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta")
 record = SeqIO.read(file_2, "fasta")
 table = 11
-min_pro_len = 100
+min_pro_len = 150
 
 for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
     for frame in range(3):
@@ -55,7 +55,7 @@ print("")
 print("NM_066157.3_pot-1_NCBI_DNA_matchesP42001_Celegans.fasta")
 record = SeqIO.read(file_3, "fasta")
 table = 11
-min_pro_len = 100
+min_pro_len = 150
 
 for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
     for frame in range(3):

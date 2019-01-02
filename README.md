@@ -220,8 +220,39 @@ This alignment looks great! You can see all of the alignments between the differ
 
 ![Celegans_POT1_protein_alignment](/Assets/Celegans_POT1_protein_alignment.jpg "Celegans_POT1_protein_alignment")
 
-
 #### Displaying pot-1 Open Reading Frames
+I used code from the BioPython Tutorial to identify the C. elegans pot-1 gene Open Reading Frames AND to report the translated proteins! Compare this to the last section to see that the the DNA -> Protein translations all have the correct lengths! The code is from http://biopython.org/DIST/docs/tutorial/Tutorial.html in the section titled "20.1.13. Identifying open reading frames". You should check this code out! It can identify Open Reading Frames in the +/- strand AND in three different reading frames, SO IT DOES ALL 6 FRAMES!!! I re-used the code four times (instead of making a function, haha). Here's part of the code that I used:
+
+```python
+#!/usr/bin/env python
+
+from Bio import SeqIO
+# record = SeqIO.read("NC_005816.fna", "fasta")
+file_0 = "NM_001361730.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta"
+file_1 = "NM_001361731.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta"
+file_2 = "NM_001361732.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta"
+file_3 = "NM_066157.3_pot-1_NCBI_DNA_matchesP42001_Celegans.fasta"
+
+print("")
+print("NM_001361730.1_Caenorhabditis_elegans_pot-1_gene_homolog.fasta")
+record = SeqIO.read(file_0, "fasta")
+table = 11
+min_pro_len = 150
+
+for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
+    for frame in range(3):
+        length = 3 * ((len(record)-frame) // 3) #Multiple of three
+        for pro in nuc[frame:frame+length].translate(table).split("*"):
+            if len(pro) >= min_pro_len:
+                print("%s...%s - length %i, strand %i, frame %i" \
+                % (pro[:30], pro[-3:], len(pro), strand, frame))
+```
+
+![Displaying_pot-1_Open_Reading_Frames](/Assets/Displaying_pot-1_Open_Reading_Frames.jpg "Displaying_pot-1_Open_Reading_Frames")
+
+#### Discussing C. elegans pot-1 Alternative Splicing
+
+
 
 # STN1 Mutation Triggers ALT in Yeast
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
