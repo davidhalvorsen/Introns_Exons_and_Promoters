@@ -136,13 +136,9 @@ NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NO
 Searching Ensembl for human ATRX yielded ATRX-201 and ATRX-202. I picked ATRX-201 cause it has 35 exons (which matches the Lovejoy 2012 paper). It was Ensembly ENST00000373344.10. Ensembl refseq switch to NCBI Reference Sequence yielded NM_000489.5 for the gene. I saved it as NM_000489.5_homo_sapiens_ATRX_Gene.fasta.
 
 #### Removing ATRX Exons 2-29 
-See the Lovejoy 2012 supplementary Excel table for a list of commonly missing ATRX Exons. I decided to play with the U2OS variant because that is a cell line that I used to grow :) U2OS is missing ATRX exons 2-29. I used R to 
+See the Lovejoy 2012 supplementary Excel table for a list of commonly missing ATRX Exons. I decided to play with the U2OS variant because that is a cell line that I used to grow :) U2OS is missing ATRX exons 2-29. NCBI says exon 2 is [236:348] and exon 29 is 6542..6719 https://www.ncbi.nlm.nih.gov/nuccore/NM_000489. I used R to remove those exons.
 
 ```{r}
-# U2OS is missing ATRX exons 2-29
-# NCBI says exon 2 is [236:348]
-# exon 29 is 6542..6719
-# https://www.ncbi.nlm.nih.gov/nuccore/NM_000489
 library(seqinr)
 WT_hATRX_Gene <- read.fasta("NM_000489.5_homo_sapiens_ATRX_Gene.fasta")
 WT_hATRX_Gene_Nucleotides <- WT_hATRX_Gene[[1]]
@@ -155,7 +151,29 @@ U2OS_ATRX_Characters <- c(U2OS_hATRX_Gene_Nucleotide_FIRST, U2OS_hATRX_Gene_Nucl
 U2OS_ATRX_DNAstring <- DNAString(paste(toupper(U2OS_ATRX_Characters), collapse = ""))
 ```
 
-#### Pairwise Sequence Alignment of WT ATRX to Mutant ATRX
+#### Sequence Alignment of WT ATRX to Mutant ATRX
+The R msa package can't handle the full length of the ATRX gene, so I shortened it down to 400 nucleotides.
+```{r}
+# limit it to 400 ... that's more than enough to see exon absence
+U2OS_ATRX_DNA_Short <- U2OS_ATRX_DNAstring[1:400]
+WT_hATRX_DNA_Short <- toupper(WT_hATRX_Gene_Nucleotides[1:400])
+write.fasta(sequences = U2OS_ATRX_DNA_Short, names = "U2OS_ATRX_DNA_Short", file.out = "U2OS_ATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
+write.fasta(sequences = WT_hATRX_DNA_Short, names = "WT_hATRX_DNA_Short", file.out = "WT_hATRX_DNA_Short.fasta", open = "w", nbchar = 70, as.string = FALSE)
+library(msa)
+# both_ATRX_Sequences <- read.fasta("WT_and_U2OS_hATRX.fasta")
+both_ATRX_Sequences_SHORT <- "both_ATRX_Sequences_SHORT.fasta"
+# typeof(both_ATRX_Sequences)
+#both_ATRX_DNAStringSet <- readDNAStringSet(both_ATRX_Sequences)
+#both_ATRX_Sequences_Alignment <- msa(both_ATRX_DNAStringSet)
+both_ATRX_Sequences_SHORT_StringSet <- readDNAStringSet(both_ATRX_Sequences_SHORT)
+both_ATRX_Sequences_Alignment_SHORT <- msa(both_ATRX_Sequences_SHORT_StringSet)
+both_ATRX_Sequences_Alignment_SHORT
+msaPrettyPrint(both_ATRX_Sequences_Alignment_SHORT, output="pdf", showNames="none",
+showLogo="none", askForOverwrite=FALSE, verbose=TRUE)
+#texi2pdf("both_ATRX_Sequences_Alignment.tex", clean=TRUE)
+```
+You can see that the sequences are the same until postion 236. That is where the Exon deletion for U2OS starts! 
+![ATRX_Exon_Deletion_Alignment](/Assets/ATRX_Exon_Deletion_Alignment.jpg "ATRX_Exon_Deletion_Alignment")
 
 # STN1 Mutation Triggers ALT in Yeast
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
