@@ -1,30 +1,90 @@
-# Goals
-This is what I want to present on Wednesday, January 2nd @7am:
-* Coding
-	* Wrangling_CIRM_Data: get downloadling shell script working for logging failures
-	* Breaking_Ontogeny: git Clays' bash script working, describe missing files, add example data to play w/ and mini-tutorial
-	* Review Introns, Exons, and Promoters
-* Scientific Writing
-	* ALT
-		* Is TMM inhibition a universal cancer treatment?
-		* Markers of ALT Activity
-		* Promoter Compaction and Exon Deletion can Initiate ALT
-		* ALT remodels telomere architecture
-	* Stem Cells
-		* MSC promoter and ATRX => ALT
-		* HSC dysfunction may lead to AD (microglia)
-		* iPSC seem to use ALT
-	* Sequencing	
-		* Review of DNA Sequencing methods from CIRM
-		* Exon sequencing ALT
-		* Sequencing Identifying Gene Signature in ALT
-==========================================================================
 Repo: ALT_Introns_Exons_and_Promoters
-Description: I used Python and R to explore the Alternative Lengthening of Telomeres literature in humans, mice, c. elegans, and yeast.
+Description: I used Python and R to explore the Alternative Lengthening of Telomeres literature in Homo sapiens, Caenorhabditis elegans, and yeast.
 Website: davehalvorsen.github.oi/ALT
 
-# Introduction
-This is a programmatic exploration of the Alternative Lengthening of Telomeres (ALT) literature in humans, mice, c. elegans, and yeast. 
+# TERT Promoter Compaction Causes ALT in Human and Mouse Cells
+* Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
+	* mESC deficient for DNMT have HUGE telomeres. Mouse subtelomeres HEAVILY methylated, BT NOT in DNMT cells?!?	
+	* Histone 3 Lys9 H3K9 and histone 4 Lys 20 H4K20 trimethylation REMAIN.
+	* lack of DNMT INCREASED telomeric recombination (T-SCE) and APBs. authors conclude that increased telomeric recombination MIGHT lead to telomere length changes, BUT they do not exclude the invovlement of telomerase in the aberrant telomere elongation, BUT here are two papers that better describe the link!!!!
+
+* Atkinson 2005 found chromatin modifications of hTR and hTERT promoters linked w/ ALT
+	* hTR and hTERT lower expression in ALT is linked w/ histone H3 and H4 hypoacetylation amd methylation of Lys9 of Histone H3
+	* TEL+ cells had hyperacetylation of H3 and H4 and methylation of Lys4H3. 
+	* Treatment w/ 5 AZC and Trichostatin A => chromatin remodeling hTR, hTERT and therefore expression. 
+	* ALT+ methylated Lys20 Histone H4 not associated w/ gene expression, but does seem ALT-specific ... new marker?
+	* authors propose ALT may arise from tight repression of hTR and hTERT promoters ... possibly why MSC go ALT?!?
+
+* Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+	* Triochostatin A and/or 5 AZC reversion from complete to partial methylation of CpG islands of hTERT promoters.
+	* ALT+ cells had long, heterogenous telomere lengths
+	* acetylation H3K9 and methylation of H3K4 OPEN chromatin KNOWN
+	* parent WHE NO TMM had H3K9 hypo methylation, H3K4 hypermethylation and acetylations of H3K9 and H3K14
+	* ALT H3K9 methylation and low levels of H3K4 methylation and H3K9+H3K14 acetylations
+	* treating with TSC or 5AZC decreased ratio of H3K9 methylation / H3K4 methylation of ALT into TEL- lines
+	* authors made E6CL from TEL+ to TEL- w/ >240 PDs!!!
+	* evidence that TMM reverseible based on chromatin structure!!!
+	* FIGURE OF RATIOS!
+
+Gonzalo 2006 DNA methyltransferases control telomere length and telomere recombination in mammalian cells.pdf
+Atkinson 2005 Lack of Telomerase Gene Expression in Alternative Lengthening of Telomere Cells Is Associated with Chromatin Remodeling of the hTR and hTERT Gene Promoters
+Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+#### Getting The hTERT Sequence
+The UniProt entry O14746 is for hTERT https://www.uniprot.org/uniprot/O14746. Following GeneID 7015 gets TERT telomerase reverse transcriptase for humans https://www.ncbi.nlm.nih.gov/gene/7015. Note that the reverse arrow on TERT indicates that the sequence is on the reverse strand (this will become important later). I downloaded the FASTA as "NC_000005.10_hChrom5_TERT_CpG_Start.fasta". A quick text search shows that the start codon is at position 59. Take care with this sequence cause it's the reverse complement of the actual sequence!
+
+#### Checking for CpG Islands in the Default hTERT Sequence
+
+#### Identifying the hTERT CpG Island Region
+Kumakura 2005 found the hTERT CpG island to be from 654 bp upstream to 510 bp downstream of the ATG start codon. 
+
+Cong 1999 The human telomerase catalytic subunit hTERT: organization of the gene and characterization of the promoter
+Kumakura 2005 Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
+I want to explore hTERT promoter CpG island methylation, BUT I'll need to do some digging to get the sequence and identify the CpG island region. Cong 1999 reports that the core hTERT promoter region is from -330 to +361 bp of the ATG start codon. HOWEVER, that doesn't necessarily imply the CpG region to be ONLY from -330 to +361bp (see next section).
+
+Kumakura 2005
+the hTERT CpG island which is from 654 bp upstream of the putative
+transcription start site to 510 bp downstream of the transcription start site
+were the same as those described by Dessain et al. (8) 
+8 is Dessain SK, Yu H, Reddel RR, Beijersbergen RL,
+Weinberg RA. Methylation of the human telomerase
+gene CpG island. Cancer Res 2000;60:537–41.
+
+Dessain 2000
+On the basis of the quantitative
+criteria proposed by Antequera and Bird (18), this CpG island is from
+654 bp upstream of the putative transcription start site (6) to 510 bp
+downstream of the transcription start site, ending 56 bp after the start
+of the first intron (6 – 8, 18). 5
+Within this region, the DNA has a GC
+content of 74% and a CG:GC ratio of 0.87
+
+
+#### Obtaining hTERT WITH the CpG Island Region
+IMAGE TERT REVERSE ARROW INDICATES REVERSE STRAND
+https://www.ncbi.nlm.nih.gov/gene/7015
+INITIAL SETUP
+from:  
+1253167
+ to:  
+1295047
+Cong 1999 start codon of ATG seems to be on line 1 of the hTERT
+"ATGCCGCGCGCT" is end of the line, which is 59 in from the left (59 is A of atg)
+CpG is 654 bp upstream of transcriptoin start site, SO 595 back from current start
+SO 1253167-595 = 1252572 should be start site now
+I might be off by 1 or so, BUT I nkow that its 654 upstream of start to 510 bp downstream of start site (ending 56 bp after start of first intron). I can check the m ath on that location to be sure :)
+I THINK I WAS BACKWARDS?!?
+What about 1295047 + 595 = 1295642 YESSSSSSS, that's right :)
+now i have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable!
+https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true
+
+
+#### GC content of CpG Promoter R
+
+
+
+
+
+
 
 # POT-1 Deficiency Creates ALT+ C. Elegans Strains
 ALT can happen in C elegans! Most human cancers have long/heterogenous telomeres 
@@ -55,57 +115,8 @@ CHENG 2012 CelegansTELOMEREandSURVIVAL.png
 
 ##### pot-1 Alternative Splicing
 
-# TERT Promoter Compaction Causes ALT in Human and Mouse Cells
-Lack of Telomerase Gene Expression in Alternative Lengthening of Telomere Cells Is Associated with chromatin Remodeling of the hTR and hTERT Gene Promoters
-Reversible Conversion of Immortal Human Cells from Telomerase-Positive to Telomerase-Negative Cells
-DNA methyltransferases control telomere length and telomere recombination in mammalian cells
 
 
-### Identifying The hTERT Promoter Sequence
-Cong 1999 The core promoter region (of hTERT) identified in this
-study extends from –330 to +361 bp
-
-#### Identifying the hTERT CpG Island Region
-Kumakura 2005
-the hTERT CpG island which is from 654 bp upstream of the putative
-transcription start site to 510 bp downstream of the transcription start site
-were the same as those described by Dessain et al. (8) 
-8 is Dessain SK, Yu H, Reddel RR, Beijersbergen RL,
-Weinberg RA. Methylation of the human telomerase
-gene CpG island. Cancer Res 2000;60:537–41.
-
-Dessain 2000
-On the basis of the quantitative
-criteria proposed by Antequera and Bird (18), this CpG island is from
-654 bp upstream of the putative transcription start site (6) to 510 bp
-downstream of the transcription start site, ending 56 bp after the start
-of the first intron (6 – 8, 18). 5
-Within this region, the DNA has a GC
-content of 74% and a CG:GC ratio of 0.87
-#### Obtaining hTERT WITH the CpG Island Region
-IMAGE TERT REVERSE ARROW INDICATES REVERSE STRAND
-https://www.ncbi.nlm.nih.gov/gene/7015
-INITIAL SETUP
-from:  
-1253167
- to:  
-1295047
-Cong 1999 start codon of ATG seems to be on line 1 of the hTERT
-"ATGCCGCGCGCT" is end of the line, which is 59 in from the left (59 is A of atg)
-CpG is 654 bp upstream of transcriptoin start site, SO 595 back from current start
-SO 1253167-595 = 1252572 should be start site now
-I might be off by 1 or so, BUT I nkow that its 654 upstream of start to 510 bp downstream of start site (ending 56 bp after start of first intron). I can check the m ath on that location to be sure :)
-I THINK I WAS BACKWARDS?!?
-What about 1295047 + 595 = 1295642 YESSSSSSS, that's right :)
-now i have more at the beginniig, so "atgccgcgcgctccccgct" is fully searchable!
-https://www.ncbi.nlm.nih.gov/nuccore/NC_000005.10?report=fasta&from=1253167&to=1295642&strand=true
-
-
-#### GC content of CpG Promoter R
-
-#### Identifying Exons and Introns of hTERT
-
-#### hTERT Alternative Splicing
 
 # ATRX Exon Deletion is Required for Human ALT Activity
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
@@ -116,8 +127,29 @@ https://www.uniprot.org/uniprot/Q9H668
 
 
 # STN1 Mutation Triggers ALT in Yeast
-A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
+FIG4 of paper shows sequence analysis of K. lactis STN1 gene and homologues from S. cerevisiae (Sc) and Candida glabrata (Cgl) (GenBank accession numbers P_38960 and XP_448655, respectively).
+BUT NCBI says "The following term was not found in Nucleotide: P_38960."for P_38960. XP_448655 is here: https://www.ncbi.nlm.nih.gov/protein/XP_448655. 
+I couldn't find the sequence for K. lactis they were talking about ... I think it's NCBI Reference Sequence: XM_452728.1 Kluyveromyces lactis uncharacterized protein (KLLA0_C11825g), partial mRNA BECAUSE /note="weakly similar to uniprot|P38960 Saccharomyces
+                     cerevisiae YDR082W STN1 Protein involved in telomere
+                     length regulation functions in telomere metabolism during
+                     late S phase"
+and it's the only result (other than whole chromosome chunks) w/ this crazy search term I made:
+(((stn1) NOT "Pyrenophora tritici-repentis"[porgn:__txid45151] NOT "Fusarium fujikuroi"[porgn:__txid5127] NOT "[Candida] glabrata"[porgn:__txid5478] NOT "Hortaea werneckii"[porgn:__txid91943] NOT "Saccharomyces cerevisiae"[porgn:__txid4932]) NOT "Metarhizium robertsii"[porgn:__txid568076] NOT "Fusarium sp. FIESC_5 CS3069"[porgn:__txid1318460] NOT "Fusarium pseudograminearum CS3487"[porgn:__txid1318458] NOT "Fusarium pseudograminearum CS3427"[porgn:__txid1318457] NOT "Fusarium pseudograminearum CS3220"[porgn:__txid1318456] NOT "Fonsecaea multimorphosa"[porgn:__txid979981] NOT "Cladophialophora immunda"[porgn:__txid569365] NOT "Aspergillus nidulans FGSC A4"[porgn:__txid227321] NOT "Candida viswanathii"[porgn:__txid5486] NOT "Zygosaccharomyces bailii"[porgn:__txid4954] NOT "Metarhizium anisopliae"[porgn:__txid5530] NOT "Aspergillus flavus"[porgn:__txid5059] NOT "Talaromyces atroroseus"[porgn:__txid1441469] NOT "[Candida] auris"[porgn:__txid498019] NOT "Zygosaccharomyces rouxii"[porgn:__txid4956] NOT "[Candida] boidinii"[porgn:__txid5477] NOT "Komagataella phaffii"[porgn:__txid460519] NOT "Aspergillus fumigatus"[porgn:__txid746128] NOT "Candida albicans SC5314"[porgn:__txid237561] NOT "Yarrowia lipolytica"[porgn:__txid4952]) AND "Kluyveromyces lactis"[porgn:__txid28985] 
+
+sceriviasa yeast was easier to find cause it's got stn1p in the title
+https://www.ncbi.nlm.nih.gov/nuccore/NM_001180390.1
+
+
+Lyer 2005 A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
 https://mcb.asm.org/content/25/18/8064
+
+#### getting k lactis
+
+#### replicating attempt of lyer 2005
+
+#### multiple sequence3 alignment of human STN1 protein vs. k lactis
+
+
 
 # Data Sources
 
@@ -216,4 +248,27 @@ These files can be found in the Open_Reading_Frames folder:
 * FindingGenesWithORFs.py this is an incorrect solution to a Rosalind.info ORF problem ... trying to figure things out.
 
 ![PLACEHOLDER](/Assets/identifying-open-reading-frames.jpg "PLACEHOLDER")
+
+
+# Goals
+This is what I want to present on Wednesday, January 2nd @7am:
+* Coding
+	* Wrangling_CIRM_Data: get downloadling shell script working for logging failures
+	* Breaking_Ontogeny: git Clays' bash script working, describe missing files, add example data to play w/ and mini-tutorial
+	* Review Introns, Exons, and Promoters
+* Scientific Writing
+	* ALT
+		* Is TMM inhibition a universal cancer treatment?
+		* Markers of ALT Activity
+		* Promoter Compaction and Exon Deletion can Initiate ALT
+		* ALT remodels telomere architecture
+	* Stem Cells
+		* MSC promoter and ATRX => ALT
+		* HSC dysfunction may lead to AD (microglia)
+		* iPSC seem to use ALT
+	* Sequencing	
+		* Review of DNA Sequencing methods from CIRM
+		* Exon sequencing ALT
+		* Sequencing Identifying Gene Signature in ALT
+==========================================================================
 
