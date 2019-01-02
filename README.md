@@ -3,13 +3,36 @@ Description: I used Python and R to explore the Alternative Lengthening of Telom
 Website: davehalvorsen.github.oi/ALT
 
 # Telomere Maintenance Mechanisms
-Alternative Lengthening of Telomeres (ALT)
-Telomerase (TEL)
-Shay FIGURE DUAL INHIBITION
-REDDEL EST
-these therapies complicated cause might need to shorten telomere lengths too !
-ALT+ cells using ALT
-TEL+ cells using TEL
+When DNA is getting copied, small end pieces aren't able to be fully copied. This is known as the End Replication Problem and is a result of Okazaki fragments incompletely covering the end of the chromosome. This is an issue for cell types that need to divide a lot, like Hematopoietic stem cells (HSC). HSCs have plenty of division to do so they can keep up with all the differentiation to make blood cells. This is why they express telomerase, which is a reverse transcriptase that adds repetitive telomeric DNA (TTAGGG)n to the ends of the chromosomes (Allsopp 2001). Did you notice that I'm citing a paper from the Weissman lab? ;)  
+ 
+![telomeres-shorten-with-age](/Assets/telomeres-shorten-with-age.jpg "telomeres-shorten-with-age")
+
+(Finkel 2007)
+
+Cells that divide a lot will senesce in the absence of an active telomere maintenance mechanism (Shay 2012). That's why Telomerase is great for stem cells and other cell types that need to divide a lot. HOWEVER, it's also part of how the majority of cancers become immortal (Cesare 2010). This is why several companies are working on telomere-based anti-cancer therapies:
+
+* Telomerase enzyme inhibitor: 
+	* GRN163L (Geron)
+* Telomerase active immunotherapy:	
+	* GRNVAC1 (Geron)
+	* GV1001 (Pharmexa)
+	* P540-548 (Gemvax)
+	* Vx01 (Vaxon Biotech)
+	* TLI (Cosmo Bioscience) 
+
+(Shay 2012, HARLEY 2008)
+
+One problem with telomerase inhibitors is that they have been reported to cause problems with blood stem cells (Hu 2017). Another problem with the telomerase inhibition approach is that approximately 10-15% of cancers use the Alterantive Lengthening of Telomeres (ALT) to extend telomeres, some cancers won't be treated with these anti-telomerase therapies. But, it's way worse of a problem than that! Tumors have been reported to use both ALT and TEL simultaneously (Gocha 2013) AND in vitro inhibition of telomerase selects for ALT activity (Sahin 2012). 
+
+![TEL_ALT_Reversible](/Assets/TEL_ALT_Reversible.jpg "TEL_ALT_Reversible")
+
+(Shay 2012)
+
+On an interesting note, there is a high frequency of cancers with a Mesenchymal Stem Cell origin using the ALT pathway (77% malignant fibrous histocytomas, 47-66% of osteosarcomas (Lafferty-Whyte 2009), 21.4% of liposarcomas (Venturini APB ALT LIPOSARCOMA 2008). This may be a result of the telomerase promoter being repressed with chromatin compaction (Atkinson 2005). Telomerase inhibition MIGHT not be alone in potentially causing problems for stem cells. There is some evidence to suggest that stem cells use ALT (Kalmbach 2014, Huang 2014). To make things worse, some cancers appear to extensively divide without a telomere maintenance mechanism (Dagg 2017).  
+
+![stem_cell_ALT.jpg](/Assets/stem_cell_ALT.jpg.jpg "stem_cell_ALT.jpg")
+
+(Kalmbach 2014)
 
 # ATRX Exon Deletion is Common in ALT
 This project can be found in the Human_ATRX_ALT folder. ATRX gene mutations are found in a range of cancers. 10-15% of cancers are estimated to use ALT. ALT involves homologous recombination-based telomere elongation. Inactivating mutations in either ATRX or DAXX are found in many cancers. Depletion of ATRX seems insufficient to trigger ALT, but it does seem to play a key role in the ALT pathway. The absence of ATRX might lead to the failure of stalled replication forks to get resolved. The required fork restart would require homologus recombination and could jumpstart the ALT pathway (Clynes 2013). ALT involves a template-based lengthening of telomeres with homologous recombination. The genetic and epigenetic changes are not full understood. Lovejoy 2012 reported that ATRX gene mutations are a common feature of ALT. Specifically 19/22 ALT+ cell lines had an issue with the expression of ATRX or DAXX (Lovejoy 2012). See the Lovejoy 2012 supplementary information for the Excel table of Exon deletions in ALT cell lines. 
@@ -328,5 +351,14 @@ showLogo="none", askForOverwrite=FALSE, verbose=FALSE)
 * Boeck 2016 The time resolved transcriptome of C. elegans
 * Iyer 2005 A Mutation in the STN1 Gene Triggers an Alternative Lengthening of Telomere-Like Runaway Recombinational Telomere Elongation and Rapid Deletion in Yeast
 * Cohen 2002 Formation of extrachromosomal circles from telomeric DNA in Xenopus laevis 
-
+* Hu 2017 Imetelstat, a Telomerase Inhibitor, Is Capable of Depleting Myelofibrosis Hematopoietic Stem Cells and Progenitor Cells
+* Weissman 2001 Telomere Shortening Accompanies Increased Cell Cycle Activity during Serial Transplantation of Hematopoietic Stem Cells
+* Cesare 2010 Alternative lengthening of telomeres: models, mechanisms and implications
+* Shay 2012 Cancer and Telomeres −− An ALTernative to Telomerase
+* Harley 2008 Telomerase and cancer therapeutics
+* Sahin 2012 Antitelomerase therapy provokes ALT and mitochondrial adaptive mechanisms in cancer
+* Gocha 2013 Human Sarcomas Are Mosaic for Telomerase-Dependent and Telomerase-Independent Telomere Maintenance Mechanisms
+* Kalmbach 2014 Telomere Length Reprogramming in Embryos and Stem Cells
+* Huang 2014 Telomere regulation in pluripotent stem cells
+* Dagg 2017 Extensive Proliferation of Human Cancer Cells with Ever-Shorter Telomeres
 
