@@ -118,15 +118,36 @@ CHENG 2012 CelegansTELOMEREandSURVIVAL.png
 
 
 
-# ATRX Exon Deletion is Required for Human ALT Activity
+# ATRX Exon Deletion is Common in ALT
+ATRX gene mutations are found in a range of cancers. 10-15% of cancers are estimated to use ALT. ALT involves homologous recombination-based telomere elongation. Inactivating mutations in either ATRX or DAXX are found in many cancers. Depletion of ATRX seems insufficient to trigger ALT, but it does seem to play a key role in the ALT pathway. The absence of ATRX might lead to the failure of stalled replication forks to get resolved. The required fork restart would require homologus recombination and could jumpstart the ALT pathway (Clynes 2013). ALT involves a template-based lengthening of telomeres with homologous recombination. The genetic and epigenetic changes are not full understood. Lovejoy 2012 reported that ATRX gene mutations are a common feature of ALT. Specifically 19/22 ALT+ cell lines had an issue with the expression of ATRX or DAXX (Lovejoy 2012). See the Lovejoy 2012 supplementary information for the Excel table of Exon deletions in ALT cell lines. 
+![ATRX_Prevents_Fork_Collapse](/Assets/ATRX_Prevents_Fork_Collapse.jpg "ATRX_Prevents_Fork_Collapse")
+(Clynes 2013)
+
+
+NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+* Lovejoy 2012 PLoS Genet Loss of ATRX, genome instability, altered DNA damage response hallmarks of ALT pathway
+	* ALT proposedtemplate extension of teloemres w/ HR, BUT getic / epigenetic changes aren't fully known. this paper used genomic, molecular  biological and cell biological sciencyi9ng on panel of 22 ALT cell lines (haz lines derived in vitro). loss of ATRX protein + ATRX gene mutations are feature of ALT lines. ALT linked w/ genome rearrangements, micronucleation and wacky DSB repair ... these diagnositc features may help to identify ALT.
+	* table of exon deletions from supplementary excel
+* Clynes 2013 Curr Opin Genet Dev ATRX and the replication of structured DNA(1)
+	* ATRX mutations found in vareity of cancer types. 10-15% cancers use ALT. HR w/ telomeres OR ectr. inactivating mutations in ATRX OR DAXX found in many ALT cancers. loss of ATRX found in 90% of ALT cell lines. Depletion of ALT seems insufficient to cause ALT ... + telomerase inhibition? 
+	* absence of ATRX might lead to stalled replication forks are not processed well. fork restart is depedent on HR and could trigger the ALT pathway FIGURE OF ALT PATHWAY FROM CLYNES 2013
+
+#### Getting ATRX DNA
+searching ensembl for human ATRX yielded ATRX-201 and ATRX-202. I picked ATRX-201 cause it has 35 exons (matches the Lovejoy 2012 paper)
+ENST00000373344.10. ensembl refseq switch to NCBI Reference Sequence: NM_000489.5 for gene
+
+#### Removing ATRX Exons 2-29 
+See Lovejoy 2012 supplementary excel. U2OS is missing ATRX exons 2-29
+(U2OS ALT line)
+
+#### Pairwise Sequence Alignment of WT ATRX to Mutant ATRX
+
+# STN1 Mutation Triggers ALT in Yeast
 BLASTAlignRetrieve/ID mappingPeptide searchContactHelp
 UniProtKB - Q9H668 (STN1_HUMAN)
 PART OF CST COMPLEX AND ALT-INVOLVED!!!!!!
 https://www.uniprot.org/uniprot/Q9H668
-#### Alternative Splicing in ATRX
 
-
-# STN1 Mutation Triggers ALT in Yeast
 FIG4 of paper shows sequence analysis of K. lactis STN1 gene and homologues from S. cerevisiae (Sc) and Candida glabrata (Cgl) (GenBank accession numbers P_38960 and XP_448655, respectively).
 BUT NCBI says "The following term was not found in Nucleotide: P_38960."for P_38960. XP_448655 is here: https://www.ncbi.nlm.nih.gov/protein/XP_448655. 
 I couldn't find the sequence for K. lactis they were talking about ... I think it's NCBI Reference Sequence: XM_452728.1 Kluyveromyces lactis uncharacterized protein (KLLA0_C11825g), partial mRNA BECAUSE /note="weakly similar to uniprot|P38960 Saccharomyces
